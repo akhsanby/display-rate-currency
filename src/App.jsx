@@ -33,20 +33,26 @@ function Table() {
         <thead>
           <tr>
             <th></th>
-            <th>BUY</th>
+            <th>WE BUY</th>
             <th>EXCHANGE RATE</th>
-            <th>SELL</th>
+            <th>WE SELL</th>
           </tr>
         </thead>
         <tbody>
-          {currencyDataInTable.map((c, i) => (
-            <tr key={i}>
-              <td>{c.name}</td>
-              <td>{(c.rate - (c.rate * 0.025)).toFixed(4)}</td>
-              <td>{(c.rate).toFixed(4)}</td>
-              <td>{(c.rate + (c.rate * 0.025)).toFixed(4)}</td>
-            </tr>
-          ))}
+          {currencyDataInTable.map((c, i) => {
+            let weBuy = (c.rate - (c.rate * 0.025))?.toFixed(4)
+            let exchangeRates = c.rate?.toFixed(4)
+            let weSell = (c.rate + (c.rate * 0.025))?.toFixed(4)
+
+            return(
+              <tr key={i}>
+                <td className="fw-bold">{c.name}</td>
+                <td>{weBuy}</td>
+                <td>{exchangeRates}</td>
+                <td>{weSell}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
       <div className="text-center text-white">
