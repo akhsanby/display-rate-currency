@@ -29,7 +29,7 @@ function Table() {
 
   return(
     <div className="m-auto">
-      <table className="table table-borderless table-hover text-center text-white align-middle fs-4" style={{ width: '50rem' }}>
+      <table className="table table-hover text-center text-white align-middle fs-4" style={{ width: '50rem' }}>
         <thead>
           <tr>
             <th></th>
@@ -57,7 +57,7 @@ function Table() {
         </tbody>
       </table>
       <div className="text-center text-white">
-        <h4>Currency based : {currencyDataInTable[4].name}</h4>
+        <p>* base currency is {currencyDataInTable[4].name}</p>
       </div>
     </div>
   )
