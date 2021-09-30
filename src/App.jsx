@@ -11,16 +11,16 @@ export default function App() {
 }
 
 function Table() {
-  const { CAD, IDR, JPY, CHF, EUR, USD } = useSelector((state) => state.currency.rates)
+  const currency = useSelector((state) => state.currency.data)
   const dispatch = useDispatch()
 
   const currencyDataInTable = [
-    {name: 'CAD', rate: CAD},
-    {name: 'IDR', rate: IDR},
-    {name: 'JPY', rate: JPY},
-    {name: 'CHF', rate: CHF},
-    {name: 'EUR', rate: EUR},
-    {name: 'USD', rate: USD},
+    {name: 'CAD', rate: currency.rates?.CAD},
+    {name: 'IDR', rate: currency.rates?.IDR},
+    {name: 'JPY', rate: currency.rates?.JPY},
+    {name: 'CHF', rate: currency.rates?.CHF},
+    {name: 'EUR', rate: currency.rates?.EUR},
+    {name: 'USD', rate: currency.rates?.USD},
   ]
 
   useEffect(() => {
@@ -40,13 +40,14 @@ function Table() {
         </thead>
         <tbody>
           {currencyDataInTable.map((c, i) => {
+            let currencyName = c.name
             let weBuy = (c.rate - (c.rate * 0.025))?.toFixed(4)
             let exchangeRates = c.rate?.toFixed(4)
             let weSell = (c.rate + (c.rate * 0.025))?.toFixed(4)
 
             return(
               <tr key={i}>
-                <td className="fw-bold">{c.name}</td>
+                <td className="fw-bold">{currencyName}</td>
                 <td>{weBuy}</td>
                 <td>{exchangeRates}</td>
                 <td>{weSell}</td>
