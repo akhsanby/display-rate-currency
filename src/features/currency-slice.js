@@ -3,7 +3,7 @@ import axios from 'axios'
 import API_URL from '../config'
 
 const initialState = {
-	data: [],
+	rates: {},
 	loading: false,
 	error: null,
 }
@@ -13,7 +13,7 @@ export const fetchCurrencyData = createAsyncThunk(
 	async () => {
 		try {
 			const response = await axios.get(API_URL)
-			return response.data
+			return response.data.rates
 		} catch(error) {
 			throw new Error(error)
 		}
@@ -23,24 +23,13 @@ export const fetchCurrencyData = createAsyncThunk(
 export const currencySlice = createSlice({
 	name: 'currency',
 	initialState,
-	reducers: {
-		currencyStatusSuccess: (state) => {
-			state.status = 'success'
-		},
-		currencyStatusFail: (state) => {
-			state.status = 'fail'
-		},
-		currencyReceived: (state, action) => {
-			state.data = action.payload
-		}
-	},
 	extraReducers: {
 		[fetchCurrencyData.pending]: (state, action) => {
 			state.loading = true
 			state.error = null
 		},
 		[fetchCurrencyData.fulfilled]: (state, action) => {
-			state.data = action.payload
+			state.rates = action.payload
 			state.loading = false
 		},
 		[fetchCurrencyData.rejected]: (state, action) => {
@@ -49,7 +38,5 @@ export const currencySlice = createSlice({
 		}
 	}
 })
-
-export const { currencyStatusSuccess, currencyStatusFail, currencyReceived } = currencySlice.actions
 
 export default currencySlice.reducer

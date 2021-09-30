@@ -4,19 +4,23 @@ import { fetchCurrencyData } from './features/currency-slice'
 
 export default function App() {
   return (
-    <div className="d-flex" style={{ height: '100vh' }}>
+    <div className="d-flex bg-secondary" style={{ height: '100vh' }}>
       <Table />
     </div>
   )
 }
 
 function Table() {
-  const currency = useSelector((state) => state.currency.data)
+  const { CAD, IDR, JPY, CHF, EUR, USD } = useSelector((state) => state.currency.rates)
   const dispatch = useDispatch()
 
   const currencyDataInTable = [
-    {name: 'CAD', rate: currency.rates.CAD},
-    {name: 'IDR', rate: currency.base}
+    {name: 'CAD', rate: CAD},
+    {name: 'IDR', rate: IDR},
+    {name: 'JPY', rate: JPY},
+    {name: 'CHF', rate: CHF},
+    {name: 'EUR', rate: EUR},
+    {name: 'USD', rate: USD},
   ]
 
   useEffect(() => {
@@ -25,7 +29,7 @@ function Table() {
 
   return(
     <div className="m-auto">
-      <table className="table table-borderless table-hover text-center align-middle fs-5" style={{ width: '50rem' }}>
+      <table className="table table-borderless table-hover text-center text-white align-middle fs-4" style={{ width: '50rem' }}>
         <thead>
           <tr>
             <th></th>
@@ -36,15 +40,18 @@ function Table() {
         </thead>
         <tbody>
           {currencyDataInTable.map((c, i) => (
-            <tr>
+            <tr key={i}>
               <td>{c.name}</td>
-              <td>s</td>
-              <td>{c.rate}</td>
-              <td>d</td>
+              <td>{(c.rate - (c.rate * 0.025)).toFixed(4)}</td>
+              <td>{(c.rate).toFixed(4)}</td>
+              <td>{(c.rate + (c.rate * 0.025)).toFixed(4)}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      <div className="text-center text-white">
+        <h4>Currency based : {currencyDataInTable[4].name}</h4>
+      </div>
     </div>
   )
 }
